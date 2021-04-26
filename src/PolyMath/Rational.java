@@ -5,6 +5,14 @@ public class Rational implements Scalar{
     private int numerator;
     private int denominator;
 
+    public int getNumerator() {
+        return numerator;
+    }
+
+    public int getDenominator() {
+        return denominator;
+    }
+
     public Rational(int numerator, int denominator){
         if(denominator == 0)
             throw new IllegalArgumentException("denominator can't be zero");
@@ -49,7 +57,7 @@ public class Rational implements Scalar{
 
     @Override
     public Scalar addInteger(Integer s) {
-        int newNumerator = numerator * s;
+        int newNumerator = numerator * s.getNumber();
         Rational scalar = new Rational(newNumerator, denominator);
         return scalar.reduce();
     }

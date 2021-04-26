@@ -1,7 +1,11 @@
 package PolyMath;
 
 public class Integer implements Scalar {
-    int number;
+    private int number;
+
+    public int getNumber() {
+        return number;
+    }
 
     public Integer(int number) {
         this.number = number;
