@@ -16,23 +16,28 @@ public class Rational implements Scalar{
     public Rational(int numerator, int denominator){
         if(denominator == 0)
             throw new IllegalArgumentException("denominator can't be zero");
-        int g = gcd(numerator, denominator);
-        this.numerator = numerator/g;
-        this.denominator = denominator/g;
+            int g = gcd(numerator, denominator);
+            this.numerator = numerator / g;
+            this.denominator = denominator / g;
+//        }
     }
 
     private int gcd (int n, int m){
-        int r = m;
-        while(r>1 & n%m != 0){
-            r = n%m;
-            n = m;
-            m = r;
+        if(n == 0 | m == 0 | n == 1 | m == 1)
+            return 1;
+        m = Math.abs(m); n = Math.abs(n);
+        int max = Math.max(m,n), min = Math.min(m,n);
+        int r = min;
+        while(min>1 & max>1 & max%min != 0){
+            r = max%min;
+            max = min;
+            min = r;
         }
         return r;
     }
 
     public Rational reduce(){
-        int g = gcd(denominator, numerator);
+        int g = gcd(numerator, denominator);
         Rational rational = new Rational(numerator/g, denominator/g);
         return rational;
     }
@@ -58,7 +63,7 @@ public class Rational implements Scalar{
 
     @Override
     public Scalar addInteger(Integer s) {
-        int newNumerator = numerator * s.getNumber();
+        int newNumerator = numerator + denominator * s.getNumber();
         Rational scalar = new Rational(newNumerator, denominator);
         return scalar.reduce();
     }
@@ -104,7 +109,9 @@ public class Rational implements Scalar{
     public String toString(){
         if(numerator == 0)
             return "0";
-        String s = sign() + "" + Math.abs(numerator) + "/" + Math.abs(denominator);
+        String s = sign() * Math.abs(numerator) +"";
+        if(Math.abs(denominator) != 1)
+            s+= "/" + Math.abs(denominator);
         return s;
     }
 }
