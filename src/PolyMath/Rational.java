@@ -72,14 +72,14 @@ public class Rational implements Scalar{
 
     @Override
     public Scalar mulInteger(Integer s) {
-        int newNumerator = numerator * s;
+        int newNumerator = numerator * s.getNumber();
         Rational rational = new Rational(newNumerator, denominator);
         return rational.reduce();
     }
 
     @Override
     public Scalar power(int exponent) {
-        return null;
+
     }
 
     @Override
