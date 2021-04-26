@@ -28,7 +28,7 @@ public class Integer implements Scalar {
 
     @Override
     public Scalar addInteger(Integer s) {
-        return new Integer;
+        return null;
     }
 
     @Override
