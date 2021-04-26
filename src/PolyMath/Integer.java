@@ -18,7 +18,7 @@ public class Integer implements Scalar {
 
     @Override
     public Scalar mul(Scalar s) {
-        s.
+        return null;
     }
 
     @Override
