@@ -59,9 +59,11 @@ public class Polynomial implements Nomial<Polynomial> {
                 newMap.put(e,map.get(e));
         }
 
-        givenSet.removeAll(currentSet);
-        for (var  e : givenSet)
-            newMap.put(e,polynomial.getMap().get(e));
+    //    givenSet.removeAll(currentSet);
+        for (var  e : givenSet) {
+            if(!newMap.containsKey(e))
+            newMap.put(e, polynomial.getMap().get(e));
+        }
 
       return new Polynomial(newMap);
     }
@@ -115,7 +117,7 @@ public class Polynomial implements Nomial<Polynomial> {
         for(var e : map.descendingKeySet())
         {
             String current = map.get(e).toString();
-            if (!st.equals("0")) {
+            if (!current.equals("0")) {
                 if (current.charAt(0) == '-')
                     st = current + st;
                 else
@@ -124,8 +126,10 @@ public class Polynomial implements Nomial<Polynomial> {
         }
         if (st.equals("0"))
             return "0";
+
         if(st.length()>1)
             st=st.substring(1);
+
         return st;
     }
 }
