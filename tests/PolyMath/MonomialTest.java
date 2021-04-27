@@ -108,10 +108,10 @@ class MonomialTest {
         };
         String[][] expected = {{"0","1","9/49","-972/16807","1/2","-3/14","9/98"},
                                 {"0","1","9/49","972/16807","1/2","3/14","9/98"},
-                                {"0","1","25/9","-12500/243","1/2","-5/6","25/16"},
-                                {"0","1","25/9","-12500/243","1/2","-5/6","25/16"},
+                                {"0","1","25/9","-12500/243","1/2","-5/6","25/18"},
+                                {"0","1","25/9","12500/243","1/2","5/6","25/18"},
         };
-        String[][] actuals = new String[7][8];
+        String[][] actuals = new String[4][7];
         for(int i=0; i<4; i++){
             for (int j = 0; j < 7; j++) {
                 actuals[i][j] = monomials[j].evaluate(vals[i]).toString();
@@ -119,4 +119,16 @@ class MonomialTest {
             assertArrayEquals(expected[i],actuals[i]);
         }
     }
+
+    @Test
+    void derivative() {
+        String[] expected = {"0","0","2x","20x^4","0","1/2","x","35/4x^6"};
+        String[] actuals = new String[8];
+        for(int i=0; i<8; i++){
+            actuals[i] = monomials[i].derivative().toString();
+        }
+        assertArrayEquals(expected,actuals);
+    }
+
+
 }
