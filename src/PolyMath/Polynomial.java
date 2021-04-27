@@ -124,7 +124,8 @@ public class Polynomial implements Nomial<Polynomial> {
         }
         if (st.equals("0"))
             return "0";
-
-        return st.substring(1);
+        if(st.length()>1)
+            st=st.substring(1);
+        return st;
     }
 }

@@ -35,9 +35,13 @@ class PolynomialTest {
 
     @Test
     void build() {
+
        System.out.println(Polynomial.build("1 2 3"));
         System.out.println(Polynomial.build("0 0 5"));
-        System.out.println(Polynomial.build("1 2/3 -8"));
+        System.out.println(Polynomial.build("02/3 3"));
+        System.out.println(Polynomial.build("-2342-34"));
+   //   System.out.println(Polynomial.build("123123123123123123123"));
+
 
     }
 
