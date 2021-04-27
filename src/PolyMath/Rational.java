@@ -23,11 +23,10 @@ public class Rational implements Scalar{
             this.numerator = numerator / g;
             this.denominator = denominator / g;
         }
-//        }
     }
 
     private int gcd (int n, int m){
-        if(n == 0 | m == 0 | n == 1 | m == 1)
+        if(n*m == 0 | n*m == 1)
             return 1;
         m = Math.abs(m); n = Math.abs(n);
         int max = Math.max(m,n), min = Math.min(m,n);
@@ -91,8 +90,20 @@ public class Rational implements Scalar{
 
     @Override
     public Scalar power(int exponent) {
-        int newNumerator = (int)Math.pow(numerator, exponent);
-        int newDenominator = (int)Math.pow(denominator, exponent);
+        if(numerator == 0) {
+            if (exponent == 0)
+                return new Integer(1);
+            else return new Integer(0);
+        }
+        int newNumerator = numerator;
+        int newDenominator = denominator;
+        if(exponent<0) {
+            exponent = -exponent;
+            newNumerator = denominator;
+            newDenominator = numerator;
+        }
+        newNumerator = (int)Math.pow(newNumerator, exponent);
+        newDenominator = (int)Math.pow(newDenominator, exponent);
         Rational rational = new Rational(newNumerator, newDenominator);
         return rational.reduce();
     }
