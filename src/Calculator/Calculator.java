@@ -2,6 +2,7 @@ package Calculator;
 
 
 import PolyMath.*;
+import PolyMath.Integer;
 
 public class Calculator {
 
@@ -98,7 +99,7 @@ public class Calculator {
 
         //Derivate Tests
         printTitle("Testing derivative");
-        printDerivate(p1, p1.derivative);
+        printDerivate(p1, p1.derivative());
         printDerivate(p2, p2.derivative());
         printDerivate(p3, p3.derivative());
         printDerivate(p4, p4.derivative());

@@ -27,16 +27,17 @@ class PolynomialTest {
         map2.put(2, new Monomial(new Integer(2), 2));
 
         Set<java.lang.Integer> set = map.descendingKeySet();
-        set.retainAll(map2.descendingKeySet());
 
-        for (var e:
-                set) {
+        for (var e: set) {
             System.out.println(e);
         }
     }
 
     @Test
     void build() {
+       System.out.println(Polynomial.build("1 2 3"));
+        System.out.println(Polynomial.build("0 0 5"));
+        System.out.println(Polynomial.build("1 2/3 -8"));
 
     }
 

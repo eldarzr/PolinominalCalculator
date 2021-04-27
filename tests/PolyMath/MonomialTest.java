@@ -3,10 +3,6 @@ package PolyMath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.NavigableSet;
-import java.util.Set;
-import java.util.TreeMap;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class MonomialTest {
@@ -71,7 +67,7 @@ class MonomialTest {
         String[][] actuals = new String[8][8];
         for(int i=0; i<8; i++){
             for (int j = 0; j < 8; j++) {
-                Monomial m = monomials[j].mult(monomials[i]);
+                Monomial m = monomials[j].mul(monomials[i]);
                 if(m == null)
                     actuals[i][j] = null;
                 else actuals[i][j] = m.toString();

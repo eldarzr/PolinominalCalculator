@@ -25,7 +25,7 @@ public class Monomial implements Nomial<Monomial> {
     }
 
     @Override
-    public Monomial mult(Monomial m) {
+    public Monomial mul(Monomial m) {
         int newExp = exponent+m.exponent;
         Scalar coef = coefficient.mul(m.coefficient);
         return new Monomial(coef, newExp);

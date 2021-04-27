@@ -67,7 +67,7 @@ public class Polynomial implements Nomial<Polynomial> {
     }
 
     @Override
-    public Polynomial mult(Polynomial polynomial) {
+    public Polynomial mul(Polynomial polynomial) {
         TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
         Set<java.lang.Integer> currentSet = map.descendingKeySet();
         Set<java.lang.Integer> givenSet = map.descendingKeySet();
@@ -75,7 +75,7 @@ public class Polynomial implements Nomial<Polynomial> {
         for (var  e : currentSet)
         {
             if(polynomial.getMap().containsKey(e))
-                newMap.put(e,map.get(e).mult(polynomial.getMap().get(e)));
+                newMap.put(e,map.get(e).mul(polynomial.getMap().get(e)));
             else
                 newMap.put(e,map.get(e));
         }
@@ -117,14 +117,14 @@ public class Polynomial implements Nomial<Polynomial> {
             String current = map.get(e).toString();
             if (!st.equals("0")) {
                 if (current.charAt(0) == '-')
-                    st = st + current;
+                    st = current + st;
                 else
-                    st = st + "+" + current;
+                    st = "+" + current + st;
             }
         }
         if (st.equals("0"))
             return "0";
 
-        return  st;
+        return st.substring(1);
     }
 }
