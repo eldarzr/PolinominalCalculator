@@ -67,14 +67,12 @@ class IntegerTest {
         String excepteds [] = {"1","6","36","10077696","1/1296"};
         int powers []  = {0,1,2,9,-4};
 
-
         for (int i = 0; i < excepteds.length; i++) {
             assertEquals(excepteds[i], (integers[1].power(powers[i]).toString()));
         }
 
-
-        assertEquals("1/257", (integers[4].power(powers[3]).toString()));
-        assertEquals("1/2401", (integers[7 ].power(powers[3]).toString()));
+        assertEquals("1/256", (integers[4].power(powers[4]).toString()));
+        assertEquals("1/2401", (integers[7 ].power(powers[4]).toString()));
 
     }
 
