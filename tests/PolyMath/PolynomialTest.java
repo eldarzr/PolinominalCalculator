@@ -1,6 +1,7 @@
 package PolyMath;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 import java.util.TreeMap;
@@ -28,12 +29,22 @@ class PolynomialTest {
         Set<java.lang.Integer> set = map.descendingKeySet();
         set.retainAll(map2.descendingKeySet());
 
-//        for (var e:map2.descendingKeySet()) {
-//            set.add(e);
-//        }
         for (var e:
                 set) {
             System.out.println(e);
         }
+    }
+
+    @Test
+    void build() {
+
+    }
+
+    @Test
+    void add() {
+    }
+
+    @Test
+    void mult() {
     }
 }

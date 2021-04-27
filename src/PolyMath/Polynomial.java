@@ -3,39 +3,39 @@ package PolyMath;
 import java.util.*;
 
 public class Polynomial implements Nomial<Polynomial> {
-    TreeMap <java.lang.Integer,Monomial> map = new TreeMap<>();
+    TreeMap<java.lang.Integer, Monomial> map = new TreeMap<>();
 
-    static Polynomial build(String input){
-        checkInputValidation(input);
-        int power=0;
-        TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
-        for (var e :input.split(" ")) {
-            fillMap(newMap, e, power);
-            power++;
+    public static Polynomial build(String input) {
+        int power = 0;
+        TreeMap<java.lang.Integer, Monomial> newMap = new TreeMap<>();
+        for (var e : input.split(" ")) {
+            try {
+                fillMap(newMap, e, power);
+                power++;
+            }
+            catch (Exception exception) {
+                throw new IllegalArgumentException("Invalid String");
+            }
         }
 
+        return new Polynomial(newMap);
+    }
 
-         return new Polynomial(newMap);
-            }
-
-    private static void fillMap(TreeMap<java.lang.Integer, Monomial> newMap, String e,int power) {
-        int a,b;
+    private static void fillMap(TreeMap<java.lang.Integer, Monomial> newMap, String e, int power) {
+        int a, b;
         String[] ratio = new String[1];
-        if(e.contains("/")) {
+        if (e.contains("/")) {
             ratio = e.split("/");
             a = java.lang.Integer.parseInt(ratio[0]);
             b = java.lang.Integer.parseInt(ratio[1]);
             newMap.put(power, new Monomial(new Rational(a, b), power));
-        }
-        else
-        {
-            a=java.lang.Integer.parseInt(e);
-            newMap.put(power, new Monomial(new Integer(a), power));
+        } else {
+            a = java.lang.Integer.parseInt(e);
+            if (a != 0)
+                newMap.put(power, new Monomial(new Integer(a), power));
         }
     }
 
-    private static void checkInputValidation(String input) {
-    }
 
     public Polynomial(TreeMap<java.lang.Integer, Monomial> map) {
         this.map = map;
