@@ -46,15 +46,15 @@ public class Polynomial implements Nomial<Polynomial> {
     }
 
     @Override
-    public Polynomial add (Polynomial polynomial) {
+    public Polynomial add (Polynomial p) {
         TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
         Set<java.lang.Integer> currentSet = map.descendingKeySet();
         Set<java.lang.Integer> givenSet = map.descendingKeySet();
 
         for (var  e : currentSet)
         {
-            if(polynomial.getMap().containsKey(e))
-                newMap.put(e,map.get(e).add(polynomial.getMap().get(e)));
+            if(p.getMap().containsKey(e))
+                newMap.put(e,map.get(e).add(p.getMap().get(e)));
             else
                 newMap.put(e,map.get(e));
         }
@@ -62,29 +62,29 @@ public class Polynomial implements Nomial<Polynomial> {
     //    givenSet.removeAll(currentSet);
         for (var  e : givenSet) {
             if(!newMap.containsKey(e))
-            newMap.put(e, polynomial.getMap().get(e));
+            newMap.put(e, p.getMap().get(e));
         }
 
       return new Polynomial(newMap);
     }
 
     @Override
-    public Polynomial mul(Polynomial polynomial) {
+    public Polynomial mul(Polynomial p) {
         TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
         Set<java.lang.Integer> currentSet = map.descendingKeySet();
         Set<java.lang.Integer> givenSet = map.descendingKeySet();
 
         for (var  e : currentSet)
         {
-            if(polynomial.getMap().containsKey(e))
-                newMap.put(e,map.get(e).mul(polynomial.getMap().get(e)));
+            if(p.getMap().containsKey(e))
+                newMap.put(e,map.get(e).mul(p.getMap().get(e)));
             else
                 newMap.put(e,map.get(e));
         }
 
         givenSet.removeAll(currentSet);
         for (var  e : givenSet)
-            newMap.put(e,polynomial.getMap().get(e));
+            newMap.put(e,p.getMap().get(e));
 
         return new Polynomial(newMap);
     }

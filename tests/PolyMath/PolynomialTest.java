@@ -53,13 +53,11 @@ class PolynomialTest {
 
     @Test
     void add() {
-        Polynomial p1 = Polynomial.build("1/2 1");
-        Polynomial p2 = Polynomial.build("5 0 -2");
-        System.out.println(p1);
-        System.out.println(p2);
-        System.out.println(p1.add(p2));
-        System.out.println(p1);
-        System.out.println(p2);
+        String builder [] = {"1 2 3" , "8" , "0 1/2" , "0 0 0 0 0 0 8" , "-4 -4 -4" ,"-1 0 0 0 -8"};
+        String excepteds [] = {"2+4x+6x^2","9+2x+3x^2","1+5/2x+3x^2","1+2x+3x^2+8x^6" , "-3-3x-1x^2" , "2x+3x^2-8x^3"};
+        for (int i = 0; i < builder.length; i++) {
+            assertEquals(excepteds[i], Polynomial.build("1 2 3").add(Polynomial.build(builder[i])).toString());
+        }
 
 
     }
