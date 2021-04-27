@@ -47,7 +47,7 @@ public class Integer implements Scalar {
     @Override
     public Scalar power(int exponent) {
         if(exponent<0)
-            return new Rational(1,number).power(exponent);
+            return new Rational(number,1).power(exponent);
 
         return new Integer((int)Math.pow(number,exponent));
     }
