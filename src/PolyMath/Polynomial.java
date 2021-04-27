@@ -1,23 +1,130 @@
 package PolyMath;
 
+import java.util.*;
+
 public class Polynomial implements Nomial<Polynomial> {
+    TreeMap <java.lang.Integer,Monomial> map = new TreeMap<>();
+
+    static Polynomial build(String input){
+        checkInputValidation(input);
+        int power=0;
+        TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
+        for (var e :input.split(" ")) {
+            fillMap(newMap, e, power);
+            power++;
+        }
+
+
+         return new Polynomial(newMap);
+            }
+
+    private static void fillMap(TreeMap<java.lang.Integer, Monomial> newMap, String e,int power) {
+        int a,b;
+        String[] ratio = new String[1];
+        if(e.contains("/")) {
+            ratio = e.split("/");
+            a = java.lang.Integer.parseInt(ratio[0]);
+            b = java.lang.Integer.parseInt(ratio[1]);
+            newMap.put(power, new Monomial(new Rational(a, b), power));
+        }
+        else
+        {
+            a=java.lang.Integer.parseInt(e);
+            newMap.put(power, new Monomial(new Integer(a), power));
+        }
+    }
+
+    private static void checkInputValidation(String input) {
+    }
+
+    public Polynomial(TreeMap<java.lang.Integer, Monomial> map) {
+        this.map = map;
+    }
+
+    public TreeMap<java.lang.Integer, Monomial> getMap() {
+        return map;
+    }
+
     @Override
-    public Polynomial add(Polynomial polynomial) {
-        return null;
+    public Polynomial add (Polynomial polynomial) {
+        TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
+        Set<java.lang.Integer> currentSet = map.descendingKeySet();
+        Set<java.lang.Integer> givenSet = map.descendingKeySet();
+
+        for (var  e : currentSet)
+        {
+            if(polynomial.getMap().containsKey(e))
+                newMap.put(e,map.get(e).add(polynomial.getMap().get(e)));
+            else
+                newMap.put(e,map.get(e));
+        }
+
+        givenSet.removeAll(currentSet);
+        for (var  e : givenSet)
+            newMap.put(e,polynomial.getMap().get(e));
+
+      return new Polynomial(newMap);
     }
 
     @Override
     public Polynomial mult(Polynomial polynomial) {
-        return null;
+        TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
+        Set<java.lang.Integer> currentSet = map.descendingKeySet();
+        Set<java.lang.Integer> givenSet = map.descendingKeySet();
+
+        for (var  e : currentSet)
+        {
+            if(polynomial.getMap().containsKey(e))
+                newMap.put(e,map.get(e).mult(polynomial.getMap().get(e)));
+            else
+                newMap.put(e,map.get(e));
+        }
+
+        givenSet.removeAll(currentSet);
+        for (var  e : givenSet)
+            newMap.put(e,polynomial.getMap().get(e));
+
+        return new Polynomial(newMap);
     }
 
     @Override
     public Scalar evaluate(Scalar s) {
-        return null;
+        Scalar newScalar=new Integer(0);
+        for(var e :  map.descendingKeySet())
+            newScalar=newScalar.add(s.add(map.get(e).evaluate(s)));
+
+        return newScalar;
     }
 
     @Override
     public Polynomial derivative() {
-        return null;
+        TreeMap <java.lang.Integer,Monomial> newMapping = new TreeMap<>();
+        Scalar newScalar=new Integer(0);
+        for(var e : map.descendingKeySet()) {
+            if(e!=0)
+            newMapping.put(e-1, map.get(e).derivative());
+        }
+
+        return new Polynomial(newMapping);
+    }
+
+    @Override
+    public String toString() {
+        String st="";
+
+        for(var e : map.descendingKeySet())
+        {
+            String current = map.get(e).toString();
+            if (!st.equals("0")) {
+                if (current.charAt(0) == '-')
+                    st = st + current;
+                else
+                    st = st + "+" + current;
+            }
+        }
+        if (st.equals("0"))
+            return "0";
+
+        return  st;
     }
 }
