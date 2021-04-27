@@ -16,9 +16,13 @@ public class Rational implements Scalar{
     public Rational(int numerator, int denominator){
         if(denominator == 0)
             throw new IllegalArgumentException("denominator can't be zero");
+        if(numerator == 0)
+            this.denominator = 1;
+        else {
             int g = gcd(numerator, denominator);
             this.numerator = numerator / g;
             this.denominator = denominator / g;
+        }
 //        }
     }
 
@@ -37,6 +41,8 @@ public class Rational implements Scalar{
     }
 
     public Rational reduce(){
+        if(numerator == 0)
+            return  new Rational(0,1);
         int g = gcd(numerator, denominator);
         Rational rational = new Rational(numerator/g, denominator/g);
         return rational;
@@ -56,7 +62,7 @@ public class Rational implements Scalar{
     public Scalar addRational(Rational s) {
         int newNumerator1 = numerator * s.denominator;
         int newNumerator2 = denominator * s.numerator;
-        int newDenominator = denominator * denominator;
+        int newDenominator = denominator * s.denominator;
         Rational rational = new Rational(newNumerator1+newNumerator2, newDenominator);
         return rational.reduce();
     }
