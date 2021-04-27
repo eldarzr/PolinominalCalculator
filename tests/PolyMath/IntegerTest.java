@@ -12,9 +12,14 @@ class IntegerTest {
 
     @BeforeEach
     void setUp() {
-        integers = new Integer[]{new Integer(3), new Integer(6), new Integer(1500), new Integer(300),
-                new Integer(-4), new Integer(0), new Integer(33), new Integer(-7), new Integer(0)};
-        rationals = new Rational[]{new Rational(4,6)};
+        integers = new Integer[]{new Integer(3), new Integer(6), new Integer(1500),
+                                 new Integer(300), new Integer(-4), new Integer(0),
+                                 new Integer(33), new Integer(-7), new Integer(0)};
+
+        rationals = new Rational[]{new Rational(4,6),new Rational(17,29),
+                                   new Rational(8,2),new Rational(19,5),
+                                   new Rational(-9,3),new Rational(-3,6),
+                                   new Rational(0,3)};
     }
 
     @Test
@@ -47,10 +52,33 @@ class IntegerTest {
 
     @Test
     void addRational() {
-        assertEquals("11/3",integers[3].add(rationals[0]).toString());
+        String excepteds[] = {"20/3", "191/29", "10", "49/5", "3", "11/2", "6"};
+
+        for (int i = 0; i < rationals.length; i++) {
+            assertEquals(excepteds[i], (integers[1].add(rationals[i])).toString());
+        }
+
+        assertEquals("0", (integers[8].add(rationals[6])).toString());
+    }
+
+
+    @Test
+    void power() {
+        String excepteds [] = {"1","6","36","10077696","1/1296"};
+        int powers []  = {0,1,2,9,-4};
+
+
+        for (int i = 0; i < excepteds.length; i++) {
+            assertEquals(excepteds[i], (integers[1].power(powers[i]).toString()));
+        }
+
+
+        assertEquals("1/257", (integers[4].power(powers[3]).toString()));
+        assertEquals("1/2401", (integers[7 ].power(powers[3]).toString()));
+
     }
 
     @Test
-    void mulRational() {
+    void neg() {
     }
 }
