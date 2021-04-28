@@ -49,7 +49,7 @@ public class Polynomial implements Nomial<Polynomial> {
     public Polynomial add (Polynomial p) {
         TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
         Set<java.lang.Integer> currentSet = map.descendingKeySet();
-        Set<java.lang.Integer> givenSet = map.descendingKeySet();
+        Set<java.lang.Integer> givenSet = p.getMap().descendingKeySet();
 
         for (var  e : currentSet)
         {
@@ -72,7 +72,7 @@ public class Polynomial implements Nomial<Polynomial> {
     public Polynomial mul(Polynomial p) {
         TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
         Set<java.lang.Integer> currentSet = map.descendingKeySet();
-        Set<java.lang.Integer> givenSet = map.descendingKeySet();
+        Set<java.lang.Integer> givenSet = p.getMap().descendingKeySet();
 
         for (var  e : currentSet)
         {
@@ -124,11 +124,12 @@ public class Polynomial implements Nomial<Polynomial> {
                     st = "+" + current + st;
             }
         }
-        if (st.equals("0"))
-            return "0";
 
-        if(st.length()>1)
+        if(st.length()>1 && st.charAt(0)=='+')
             st=st.substring(1);
+
+        if (st.equals(""))
+            return "0";
 
         return st;
     }
