@@ -54,10 +54,11 @@ public class Monomial implements Nomial<Monomial> {
         String s = coefficient.toString();
         if(exponent == 0 | coefficient.sign() == 0)
             return s;
-        if(coefficient.sign() < 0)
-            s = s.substring(1);
-        if(s.equals("1"))
-            s = s.substring(1);
+        if(coefficient.power(2).toString().equals("1")) {
+            s = "";
+            if (coefficient.sign() < 0)
+                s = "-";
+        }
         s = s + "x";
         if(exponent != 1)
             s = s + "^" + exponent;

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MonomialTest {
-    Monomial[] monomials = new Monomial[8];
+    Monomial[] monomials = new Monomial[9];
 
     @BeforeEach
     void setUp() {
@@ -17,14 +17,15 @@ class MonomialTest {
         monomials[4] = new Monomial(new Rational(1,2),0);
         monomials[5] = new Monomial(new Rational(1,2),1);
         monomials[6] = new Monomial(new Rational(1,2),2);
-        monomials[7] = new Monomial(new Rational(5,4),7);
+        monomials[7] = new Monomial(new Rational(-5,4),7);
+        monomials[8] = new Monomial(new Rational(-1,1),2);
     }
 
     @Test
     void testToString() {
-        String[] expected = {"0","1","x^2","4x^5","1/2","1/2x","1/2x^2","5/4x^7"};
-        String[] actuals = new String[8];
-        for(int i=0; i<8; i++){
+        String[] expected = {"0","1","x^2","4x^5","1/2","1/2x","1/2x^2","-5/4x^7","-x^2"};
+        String[] actuals = new String[9];
+        for(int i=0; i<expected.length; i++){
             actuals[i] = monomials[i].toString();
         }
         assertArrayEquals(expected,actuals);
@@ -42,8 +43,8 @@ class MonomialTest {
                 {null,null,null,null,null,null,null,"5/2x^7"}
         };
         String[][] actuals = new String[8][8];
-        for(int i=0; i<8; i++){
-            for (int j = 0; j < 8; j++) {
+        for(int i=0; i<expected.length; i++){
+            for (int j = 0; j < expected.length; j++) {
                 Monomial m = monomials[j].add(monomials[i]);
                 if(m == null)
                     actuals[i][j] = null;
