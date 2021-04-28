@@ -5,11 +5,21 @@ import java.util.*;
 public class Polynomial implements Nomial<Polynomial> {
     TreeMap<java.lang.Integer, Monomial> map = new TreeMap<>();
 
+    public Polynomial(TreeMap<java.lang.Integer, Monomial> map) {
+        if(map==null)
+            throw new NullPointerException("cannot create instance of Polynomial with null map");
+        this.map = map;
+    }
+
     public static Polynomial build(String input) {
+        if(input ==null || input == "")
+            throw new IllegalArgumentException("null/Illegal string");
         int power = 0;
         TreeMap<java.lang.Integer, Monomial> newMap = new TreeMap<>();
-        for (var e : input.split(" ")) {
+
+        for (String e : input.split(" ")) {
             try {
+                //fill values for each string given
                 fillMap(newMap, e, power);
                 power++;
             }
@@ -37,9 +47,6 @@ public class Polynomial implements Nomial<Polynomial> {
     }
 
 
-    public Polynomial(TreeMap<java.lang.Integer, Monomial> map) {
-        this.map = map;
-    }
 
     public TreeMap<java.lang.Integer, Monomial> getMap() {
         return map;
@@ -59,7 +66,7 @@ public class Polynomial implements Nomial<Polynomial> {
                 newMap.put(e,map.get(e));
         }
 
-    //    givenSet.removeAll(currentSet);
+
         for (var  e : givenSet) {
             if(!newMap.containsKey(e))
             newMap.put(e, p.getMap().get(e));
