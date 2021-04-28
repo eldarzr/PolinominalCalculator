@@ -102,6 +102,6 @@ String [] buil = {"1 2 3" , "8" , "0 1/2" , "0 0 0 0 0 0 8" , "-4 -4 -4" ,"-1 0 
         String excepteds [] = {"1+2x+3x^2","8","1/2x","8x^6","-4-4x-4x^2","-1-8x^4"
         ,"-1-2x-3x^2","0","-1/4-8x+1/2x^2","-32/5+7x^2"};
         for (int i = 0; i < buil.length; i++)
-            assertEquals(excepteds[i], Polynomial.build(buil[i]));
+            assertEquals(excepteds[i], Polynomial.build(buil[i]).toString());
         }
     }

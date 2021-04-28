@@ -11,6 +11,12 @@ public class Polynomial implements Nomial<Polynomial> {
         this.map = map;
     }
 
+    /**
+     *
+     * @param input - a string of required polynomial
+     * @return Polynomial
+     */
+
     public static Polynomial build(String input) {
         if(input ==null || input == "")
             throw new IllegalArgumentException("null/Illegal string");
@@ -30,6 +36,13 @@ public class Polynomial implements Nomial<Polynomial> {
 
         return new Polynomial(newMap);
     }
+
+    /**
+     * fill new Monomial in the Polynomial map
+     * @param newMap - fill values inside this map
+     * @param e the coefficient of the monomial
+     * @param power - the exponent of the monomial
+     */
 
     private static void fillMap(TreeMap<java.lang.Integer, Monomial> newMap, String e, int power) {
         int a, b;
@@ -52,6 +65,10 @@ public class Polynomial implements Nomial<Polynomial> {
         return map;
     }
 
+    /**
+     * @param p - another polynomial
+     * @return  new polynomial which is the result of the current Polynomial+p
+     */
     @Override
     public Polynomial add (Polynomial p) {
         TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
@@ -75,6 +92,11 @@ public class Polynomial implements Nomial<Polynomial> {
       return new Polynomial(newMap);
     }
 
+    /**
+     * @param p - another polynomial
+     * @return  new polynomial which is the multiplication of the current Polynomial and p
+     */
+
     @Override
     public Polynomial mul(Polynomial p) {
         TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
@@ -87,6 +109,13 @@ public class Polynomial implements Nomial<Polynomial> {
 
         return poly;
     }
+
+    /**
+     * multiply given Polynomial with m
+     * @param p - another polynomial
+     * @param  m given Monomial
+     * @return  new polynomial which is the multiplication of p with m
+     */
 
     private Polynomial mulByMono(Polynomial p, Monomial m) {
         TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
@@ -106,6 +135,12 @@ public class Polynomial implements Nomial<Polynomial> {
 
     }
 
+    /**
+     *
+     * @param s - another polynomial
+     * @return a new Scalar which is the evaluating of the current Polynomial with a given scalar.
+     */
+
     @Override
     public Scalar evaluate(Scalar s) {
         Scalar newScalar=new Integer(0);
@@ -114,6 +149,11 @@ public class Polynomial implements Nomial<Polynomial> {
 
         return newScalar;
     }
+
+    /**
+     *
+     * @return a new Polynomial which is the derivative of the current Polynomial.
+     */
 
     @Override
     public Polynomial derivative() {
