@@ -86,9 +86,37 @@ class PolynomialTest {
             System.out.println(p3.mul(p2).toString());
             //  assertEquals(excep2[i], p1.add(p2).toString());
         }
-
-
-
-
     }
+
+    @Test
+    void evaluate() {
+        String builder [] = {"1 1 1 1 1 1 ","6","123 2 5","1 2 3","1/1296 -7 0 0 4"};
+        String[][] excepteds = {{"-182","6","162","22","447121/1296"},
+                {"-21","6","139","9","101089/1296"},
+                {"0","6","126","2","14257/1296"},
+                {"1","6","123","1","1/1296"},
+                {"6","6","130","6","-3887/1296"},
+                {"63","6","147","17","64801/1296"},
+                {"364","6","174","34","392689/1296"} };
+        String[][] actuals = new String[7][5];
+        int[] ints = {-3,-2,-1,0,1,2,3};
+        for (int i = 0; i < ints.length; i++) {
+            for (int j = 0; j < builder.length; j++) {
+                actuals[i][j] = Polynomial.build(builder[j]).evaluate(new Integer(ints[i])).toString();
+            }
+            assertArrayEquals(excepteds[i],actuals[i]);
+        }
+    }
+
+    @Test
+    void derivative() {
+        String builder [] = {"1 1 1 1 1 1 ","6","123 2 5","1 2 3","1/1296 -7 0 0 4"};
+        String excepteds [] = {"1+2x+3x^2+4x^3+5x^4","0","2+10x","2+6x","-7+16x^3"};
+        String[] actuals = new String[5];
+        for (int i = 0; i < builder.length; i++) {
+            actuals[i] = Polynomial.build(builder[i]).derivative().toString();
+        }
+        assertArrayEquals(excepteds,actuals);
+    }
+    
 }
