@@ -72,28 +72,38 @@ public class Polynomial implements Nomial<Polynomial> {
     public Polynomial mul(Polynomial p) {
         TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
         Set<java.lang.Integer> currentSet = map.descendingKeySet();
-        Set<java.lang.Integer> givenSet = p.getMap().descendingKeySet();
+        newMap.put(0,new Monomial(new Integer(0),0));
+        Polynomial poly = new Polynomial(newMap);
 
         for (var  e : currentSet)
+             poly = poly.add(mulByMono(p,map.get(e)));
+
+        return poly;
+    }
+
+    private Polynomial mulByMono(Polynomial p, Monomial m) {
+        TreeMap <java.lang.Integer,Monomial> newMap = new TreeMap<>();
+        Monomial moly,molx;
+        int expo;
+        for (var e : p.getMap().descendingKeySet())
         {
-            if(p.getMap().containsKey(e))
-                newMap.put(e,map.get(e).mul(p.getMap().get(e)));
-            else
-                newMap.put(e,map.get(e));
+         molx=p.getMap().get(e);
+         moly=m.mul(molx);
+         expo=moly.getExponent();
+         if(newMap.containsKey(expo))
+             newMap.put(expo,newMap.get(e).add(moly));
+         else
+             newMap.put(expo,moly);
         }
-
-        givenSet.removeAll(currentSet);
-        for (var  e : givenSet)
-            newMap.put(e,p.getMap().get(e));
-
         return new Polynomial(newMap);
+
     }
 
     @Override
     public Scalar evaluate(Scalar s) {
         Scalar newScalar=new Integer(0);
         for(var e :  map.descendingKeySet())
-            newScalar=newScalar.add(s.add(map.get(e).evaluate(s)));
+            newScalar=newScalar.add(map.get(e).evaluate(s));
 
         return newScalar;
     }

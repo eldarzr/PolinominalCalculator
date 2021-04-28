@@ -10,6 +10,7 @@ public class Monomial implements Nomial<Monomial> {
     private int exponent;
     private Scalar coefficient;
 
+
     public Monomial(Scalar coefficient, int exponent){
         if(exponent < 0)
             throw new IllegalArgumentException("exponent can't be negative");
@@ -48,6 +49,14 @@ public class Monomial implements Nomial<Monomial> {
 
     public int sign(){
         return coefficient.sign();
+    }
+
+    public int getExponent() {
+        return exponent;
+    }
+
+    public Scalar getCoefficient() {
+        return coefficient;
     }
 
     public String toString(){
