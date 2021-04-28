@@ -48,7 +48,8 @@ public class Integer implements Scalar {
     public Scalar power(int exponent) {
         if(exponent<0)
             return new Rational(number,1).power(exponent);
-
+        if((number>2 || number <-2) && exponent>31)
+            throw  new IllegalArgumentException("the excepted number powered by this exponent cannot be represented in Integer");
         return new Integer((int)Math.pow(number,exponent));
     }
 
