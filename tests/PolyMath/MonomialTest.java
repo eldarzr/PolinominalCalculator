@@ -17,13 +17,13 @@ class MonomialTest {
         monomials[4] = new Monomial(new Rational(1,2),0);
         monomials[5] = new Monomial(new Rational(1,2),1);
         monomials[6] = new Monomial(new Rational(1,2),2);
-        monomials[7] = new Monomial(new Rational(-5,4),7);
+        monomials[7] = new Monomial(new Rational(5,4),7);
         monomials[8] = new Monomial(new Rational(-1,1),2);
     }
 
     @Test
     void testToString() {
-        String[] expected = {"0","1","x^2","4x^5","1/2","1/2x","1/2x^2","-5/4x^7","-x^2"};
+        String[] expected = {"0","1","x^2","4x^5","1/2","1/2x","1/2x^2","5/4x^7","-x^2"};
         String[] actuals = new String[9];
         for(int i=0; i<expected.length; i++){
             actuals[i] = monomials[i].toString();
@@ -33,16 +33,17 @@ class MonomialTest {
 
     @Test
     void add() {
-        String[][] expected = {{"0","1",null,null,"1/2",null,null,null},
-                {"1","2",null,null,"3/2",null,null,null},
-                {null,null,"2x^2",null,null,null,"3/2x^2",null},
-                {null,null,null,"8x^5",null,null,null,null},
-                {"1/2","3/2",null,null,"1",null,null,null},
-                {null,null,null,null,null,"x",null,null},
-                {null,null,"3/2x^2",null,null,null,"x^2",null},
-                {null,null,null,null,null,null,null,"5/2x^7"}
+        String[][] expected = {{"0","1",null,null,"1/2",null,null,null,null},
+                {"1","2",null,null,"3/2",null,null,null,null},
+                {null,null,"2x^2",null,null,null,"3/2x^2",null,"0"},
+                {null,null,null,"8x^5",null,null,null,null,null},
+                {"1/2","3/2",null,null,"1",null,null,null,null},
+                {null,null,null,null,null,"x",null,null,null},
+                {null,null,"3/2x^2",null,null,null,"x^2",null,"-1/2x^2"},
+                {null,null,null,null,null,null,null,"5/2x^7",null},
+                {null,null,"0",null,null,null,"-1/2x^2",null,"-2x^2"}
         };
-        String[][] actuals = new String[8][8];
+        String[][] actuals = new String[9][9];
         for(int i=0; i<expected.length; i++){
             for (int j = 0; j < expected.length; j++) {
                 Monomial m = monomials[j].add(monomials[i]);
@@ -56,18 +57,19 @@ class MonomialTest {
 
     @Test
     void mult() {
-        String[][] expected = {{"0","0","0","0","0","0","0","0"},
-                                {"0","1","x^2","4x^5","1/2","1/2x","1/2x^2","5/4x^7"},
-                                {"0","x^2","x^4","4x^7","1/2x^2","1/2x^3","1/2x^4","5/4x^9"},
-                                {"0","4x^5","4x^7","16x^10","2x^5","2x^6","2x^7","5x^12"},
-                                {"0","1/2","1/2x^2","2x^5","1/4","1/4x","1/4x^2","5/8x^7"},
-                                {"0","1/2x","1/2x^3","2x^6","1/4x","1/4x^2","1/4x^3","5/8x^8"},
-                                {"0","1/2x^2","1/2x^4","2x^7","1/4x^2","1/4x^3","1/4x^4","5/8x^9"},
-                                {"0","5/4x^7","5/4x^9","5x^12","5/8x^7","5/8x^8","5/8x^9","25/16x^14"}
+        String[][] expected = {{"0","0","0","0","0","0","0","0","0"},
+                                {"0","1","x^2","4x^5","1/2","1/2x","1/2x^2","5/4x^7","-x^2"},
+                                {"0","x^2","x^4","4x^7","1/2x^2","1/2x^3","1/2x^4","5/4x^9","-x^4"},
+                                {"0","4x^5","4x^7","16x^10","2x^5","2x^6","2x^7","5x^12","-4x^7"},
+                                {"0","1/2","1/2x^2","2x^5","1/4","1/4x","1/4x^2","5/8x^7","-1/2x^2"},
+                                {"0","1/2x","1/2x^3","2x^6","1/4x","1/4x^2","1/4x^3","5/8x^8","-1/2x^3"},
+                                {"0","1/2x^2","1/2x^4","2x^7","1/4x^2","1/4x^3","1/4x^4","5/8x^9","-1/2x^4"},
+                                {"0","5/4x^7","5/4x^9","5x^12","5/8x^7","5/8x^8","5/8x^9","25/16x^14","-5/4x^9"},
+                                {"0","-x^2","-x^4","-4x^7","-1/2x^2","-1/2x^3","-1/2x^4","-5/4x^9","x^4"}
         };
-        String[][] actuals = new String[8][8];
-        for(int i=0; i<8; i++){
-            for (int j = 0; j < 8; j++) {
+        String[][] actuals = new String[9][9];
+        for(int i=0; i<expected.length; i++){
+            for (int j = 0; j < expected.length; j++) {
                 Monomial m = monomials[j].mul(monomials[i]);
                 if(m == null)
                     actuals[i][j] = null;
@@ -80,17 +82,17 @@ class MonomialTest {
     @Test
     void evaluate() {
         int[] vals = {-3,-2,-1,0,1,2,3};
-        String[][] expected = {{"0","1","9","-972","1/2","-3/2","9/2","-10935/4"},
-                {"0","1","4","-128","1/2","-1","2","-160"},
-                {"0","1","1","-4","1/2","-1/2","1/2","-5/4"},
-                {"0","1","0","0","1/2","0","0","0"},
-                {"0","1","1","4","1/2","1/2","1/2","5/4"},
-                {"0","1","4","128","1/2","1","2","160"},
-                {"0","1","9","972","1/2","3/2","9/2","10935/4"},
+        String[][] expected = {{"0","1","9","-972","1/2","-3/2","9/2","-10935/4","-9"},
+                {"0","1","4","-128","1/2","-1","2","-160","-4"},
+                {"0","1","1","-4","1/2","-1/2","1/2","-5/4","-1"},
+                {"0","1","0","0","1/2","0","0","0","0"},
+                {"0","1","1","4","1/2","1/2","1/2","5/4","-1"},
+                {"0","1","4","128","1/2","1","2","160","-4"},
+                {"0","1","9","972","1/2","3/2","9/2","10935/4","-9"},
         };
-        String[][] actuals = new String[7][8];
-        for(int i=0; i<7; i++){
-            for (int j = 0; j < 8; j++) {
+        String[][] actuals = new String[7][9];
+        for(int i=0; i<expected.length; i++){
+            for (int j = 0; j < expected[0].length; j++) {
                 actuals[i][j] = monomials[j].evaluate(new Integer(vals[i])).toString();
             }
             assertArrayEquals(expected[i],actuals[i]);
@@ -119,9 +121,9 @@ class MonomialTest {
 
     @Test
     void derivative() {
-        String[] expected = {"0","0","2x","20x^4","0","1/2","x","35/4x^6"};
-        String[] actuals = new String[8];
-        for(int i=0; i<8; i++){
+        String[] expected = {"0","0","2x","20x^4","0","1/2","x","35/4x^6", "-2x"};
+        String[] actuals = new String[9];
+        for(int i=0; i<expected.length; i++){
             actuals[i] = monomials[i].derivative().toString();
         }
         assertArrayEquals(expected,actuals);
