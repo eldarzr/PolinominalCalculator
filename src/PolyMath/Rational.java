@@ -13,6 +13,11 @@ public class Rational implements Scalar{
         return denominator;
     }
 
+    /**
+     *
+     * @param numerator
+     * @param denominator cant be zero.
+     */
     public Rational(int numerator, int denominator){
         if(denominator == 0)
             throw new IllegalArgumentException("denominator can't be zero");
@@ -25,6 +30,11 @@ public class Rational implements Scalar{
         }
     }
 
+    /**
+     * @param n
+     * @param m
+     * @return the gcd of tow numbers.
+     */
     private int gcd (int n, int m){
         if(n*m == 0 | n*m == 1)
             return 1;
@@ -39,6 +49,10 @@ public class Rational implements Scalar{
         return r;
     }
 
+    /**
+     *
+     * @return the reduced form of the rational number.
+     */
     public Rational reduce(){
         if(numerator == 0)
             return  new Rational(0,1);
@@ -47,18 +61,39 @@ public class Rational implements Scalar{
         return rational;
     }
 
+    /**
+     *
+     * @param s
+     * @return new scalar that is the result of me + s
+     */
     @Override
     public Scalar add(Scalar s) {
+        if(s == null)
+            throw new IllegalArgumentException("scalar cant be null");
         return s.addRational(this);
     }
 
+    /**
+     *
+     * @param s
+     * @return new scalar that is the result of me * s
+     */
     @Override
     public Scalar mul(Scalar s) {
+        if(s == null)
+            throw new IllegalArgumentException("scalar cant be null");
         return s.mulRational(this);
     }
 
+    /**
+     *
+     * @param s
+     * @return new scalar that is the result of me + s
+     */
     @Override
     public Scalar addRational(Rational s) {
+        if(s == null)
+            throw new IllegalArgumentException("scalar cant be null");
         int newNumerator1 = numerator * s.denominator;
         int newNumerator2 = denominator * s.numerator;
         int newDenominator = denominator * s.denominator;
@@ -66,28 +101,54 @@ public class Rational implements Scalar{
         return rational.reduce();
     }
 
+    /**
+     *
+     * @param s
+     * @return new scalar that is the result of me + s
+     */
     @Override
     public Scalar addInteger(Integer s) {
+        if(s == null)
+            throw new IllegalArgumentException("scalar cant be null");
         int newNumerator = numerator + denominator * s.getNumber();
         Rational scalar = new Rational(newNumerator, denominator);
         return scalar.reduce();
     }
 
+    /**
+     *
+     * @param s
+     * @return new scalar that is the result of me * s
+     */
     @Override
     public Scalar mulRational(Rational s) {
+        if(s == null)
+            throw new IllegalArgumentException("scalar cant be null");
         int newNumerator = numerator * s.numerator;
         int newDenominator = denominator * s.denominator;
         Rational rational = new Rational(newNumerator, newDenominator);
         return rational.reduce();
     }
 
+    /**
+     *
+     * @param s
+     * @return new scalar that is the result of me * s
+     */
     @Override
     public Scalar mulInteger(Integer s) {
+        if(s == null)
+            throw new IllegalArgumentException("scalar cant be null");
         int newNumerator = numerator * s.getNumber();
         Rational rational = new Rational(newNumerator, denominator);
         return rational.reduce();
     }
 
+    /**
+     *
+     * @param exponent
+     * @return new scalar that is the result of me ^ exponent
+     */
     @Override
     public Scalar power(int exponent) {
         if(numerator == 0) {
@@ -95,19 +156,35 @@ public class Rational implements Scalar{
                 return new Integer(1);
             else return new Integer(0);
         }
-        int newNumerator = numerator;
-        int newDenominator = denominator;
-        if(exponent<0) {
-            exponent = -exponent;
-            newNumerator = denominator;
-            newDenominator = numerator;
-        }
-        newNumerator = (int)Math.pow(newNumerator, exponent);
-        newDenominator = (int)Math.pow(newDenominator, exponent);
-        Rational rational = new Rational(newNumerator, newDenominator);
-        return rational.reduce();
+        if(exponent<0)
+            return powerByPositive(denominator, numerator, -exponent);
+        return powerByPositive(numerator, denominator, exponent);
     }
 
+    /**
+     *
+     * @param numerator
+     * @param denominator
+     * @param exponent
+     * @return new scalar that is the result of (numerator/denominator)^exponent.
+     */
+    private Scalar powerByPositive(int numerator, int denominator, int exponent){
+        if(exponent > 30)
+            if(Math.abs(numerator/denominator) > 2 |
+                Math.abs(numerator/denominator) == 2 & exponent > 31)
+            throw new IllegalArgumentException("exponent cant be over 31");
+        numerator = (int)Math.pow(numerator,exponent);
+        denominator = (int)Math.pow(denominator,exponent);
+        return new Rational(numerator,denominator).reduce();
+    }
+
+    /**
+     *
+     * @return the sign of me:
+     * 1 if me>0
+     * 0 if me = 0
+     * -1 otherwise.
+     */
     @Override
     public int sign() {
         if(numerator == 0)
@@ -117,6 +194,10 @@ public class Rational implements Scalar{
         return -1;
     }
 
+    /**
+     *
+     * @return new scalar that is the result of me * -1
+     */
     @Override
     public Scalar neg() {
         Rational rational = new Rational(numerator, -1* denominator);

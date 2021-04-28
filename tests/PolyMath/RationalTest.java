@@ -73,8 +73,8 @@ class RationalTest {
         };
 
         String[][] actuals= new String[7][7];
-        for(int i=0; i<7; i++){
-            for(int j=0; j<7; j++){
+        for(int i=0; i<actuals.length; i++){
+            for(int j=0; j<actuals[0].length; j++){
                 actuals[i][j] = rationals[i].mulRational(rationals[j]).toString();
             }
             assertArrayEquals(expected[i], actuals[i]);
@@ -142,8 +142,8 @@ class RationalTest {
 
         String[][] actuals= new String[7][7];
 
-        for(int i=0; i<7; i++){
-            for(int j=0; j<7; j++){
+        for(int i=0; i<expected.length; i++){
+            for(int j=0; j<expected[0].length; j++){
                 actuals[i][j] = rationals[j].power(pow[i]).toString();
             }
             assertArrayEquals(expected[i], actuals[i]);
